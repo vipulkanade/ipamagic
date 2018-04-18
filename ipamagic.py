@@ -424,24 +424,10 @@ def main():
                 module.exit_json(changed=True, result=ipamagic.get_a_record(name))
 
         elif action == "add_host":
-            # DATA_FILENAME = "/tmp/hostname.json" #### Comment File write
             result = ipamagic.create_host_record(host, network, address, comment)
             if result:
                 result = ipamagic.get_host_by_name(host)
                 en = {'hostname': host, 'result': result}
-                
-                #### Comment File write Start
-                
-                # entry = {'hostname': en['hostname'], 'ip': en['result'][0]['ipv4addrs'][0]['ipv4addr']}
-                # with open(DATA_FILENAME, mode='r+') as feedsjson:
-                #     feeds = json.load(feedsjson)
-                #     feeds.append(entry)
-                # with open(DATA_FILENAME, mode='a+') as feedsjson:
-                #     json.dump(feeds, feedsjson)
-                #     feedsjson.write(en['result'][0]['ipv4addrs'][0]['ipv4addr'] + "\n")
-                    
-                #### Comment File write End
-                
                 module.exit_json(changed=True, result=en['result'][0]['ipv4addrs'][0]['ipv4addr'])
             else:
                 raise Exception()
